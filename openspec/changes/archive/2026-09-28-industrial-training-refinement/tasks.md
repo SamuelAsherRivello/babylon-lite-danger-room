@@ -12,4 +12,4 @@
 ## 3. Delivery
 
 - [x] 3.1 Run tests, formatting and production build; verify full wave/countdown, input, pause/replay, and all heroes in WebGPU browser.
-- [ ] 3.2 Update README, brief and verification evidence; commit, release through Actions, verify public gameplay/version, synchronize specs and archive with clean local/remote alignment.
+- [x] 3.2 Update README, brief and verification evidence; commit, release through Actions, verify public gameplay/version, synchronize specs and archive with clean local/remote alignment.

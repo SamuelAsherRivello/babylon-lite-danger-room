@@ -12,6 +12,12 @@
 - Recent frame-rate samples in this in-app browser ranged roughly 26–31 FPS with the upgraded scene. This is environment-specific observation, not a mobile-performance guarantee.
 - Current screenshots: screenshot01.png (production gameplay), mobile-menu.png (production selection), wave-countdown.png (development countdown fixture).
 
+## Current public delivery — v0.0.4
+
+Release workflow 36428465922 passed installation, all tests, build, version/tag creation and GitHub release publication. The release tag points to 68433923e8a61b09ec8ea60b8f7fa506a03f8fd3 and includes implementation commit fde3d702b19ffb14cd7e45fd62af6cc8e9fc9649. Pages workflow 36428557365 successfully deployed that release revision. Local main fast-forwarded to the release commit.
+
+The public HTTPS game displayed v0.0.4, initialized the new WebGPU scene, entered gameplay, accepted keyboard P to pause, and resumed through the on-screen button. Public defeat and replay were also verified: Spider reset to 100 health, wave 1 and 60 seconds. The public game was left at hero selection. No warning/error entries appeared in the fresh public console. Countdown pause was separately verified in-browser: 4.52 seconds remained frozen, then resumed to 4.30. The production preview also reached defeat and replay reset Steel to 160 health, wave 1 and 60 seconds.
+
 ## Earlier release evidence (v0.0.3)
 
 
