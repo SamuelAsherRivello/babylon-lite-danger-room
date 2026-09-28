@@ -10,9 +10,11 @@ One room. Sixty seconds. No final wave. An original single-player superhero trai
 
 - **The Spider** — web bullets slow enemies. Hold into either wall to cling; up/down climbs it.
 - **Steel** — increased health and damage resistance. Tap attack to punch, attack in the air to kick, or hold attack to spread his arms and charge. Release for a horizontal shockwave; it fires automatically at three seconds.
-- **Echo** — punch a hologram to steal its form for ten seconds. Drone head: hold jump to fly. Turret head: attack fires lasers. Robot legs: jump higher.
+- **Echo** — punch a hologram to steal its form for ten seconds. Drone head: hold jump to fly. Turret head: attack fires lasers, or punches an enemy within reach. Robot legs: jump higher. Each absorption replaces the previous power.
 
-Survive 60 active seconds to begin the next wave. Robots pursue, drones hover and fire, and turrets shoot aimed projectiles. Their health and damage grow without a final wave; simultaneous enemies are capped at 24. Pick up green health cubes or cyan shields. Each cleared wave awards 1,000 points and restores 20 health. Personal best is saved on this browser.
+Survive 60 active seconds to clear a wave. Remaining threats dissolve, you earn 1,000 points and recover up to 20 health, and a five-second breather displays “Wave X in Y secs...” before the next wave starts. Pause also freezes this countdown. The opening wave gives you time to learn; later waves relentlessly increase pressure. Robots pursue, drones hover and fire, and turrets shoot aimed projectiles. Their health and damage grow without a final wave; simultaneous enemies are capped at 24. Pick up green health cubes or cyan shields. Personal best is saved on this browser.
+
+The fixed 3D chamber uses original brushed-metal textures, structural pipes, recessed service bays, cast shadows, and articulated heroes and holograms. Ranged attacks follow your facing direction; hold up or down for diagonal shots.
 
 | Action | Keyboard | Touch |
 | --- | --- | --- |

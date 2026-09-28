@@ -25,9 +25,87 @@ test("60 active seconds advances waves, rewards survival, and scales indefinitel
   run(g, 0.2);
   assert.equal(g.wave, 2);
   assert.equal(g.score, 1000);
+  assert.ok(g.intermission > 4.8);
+  assert.equal(g.waveTime, 0);
   assert.ok(difficulty(10000).damage > difficulty(100).damage);
   assert.ok(difficulty(10000).hp > difficulty(100).hp);
   assert.equal(difficulty(10000).cap, 24);
+});
+test("five-second breather clears threats, rewards once, freezes powers and pauses safely", () => {
+  const g = game("echo");
+  g.waveTime = 60 - 1 / 60;
+  g.player.hp = 60;
+  g.player.power = "drone";
+  g.player.powerTime = 7;
+  spawnEnemy(g, "robot");
+  step(g);
+  assert.equal(g.intermission, 5);
+  assert.equal(g.player.hp, 80);
+  assert.equal(g.enemies.length, 0);
+  assert.equal(g.bullets.length, 0);
+  const power = g.player.powerTime;
+  run(g, 2, { attack: true, jump: true, right: true });
+  assert.equal(g.waveTime, 0);
+  assert.ok(Math.abs(g.intermission - 3) < 1e-8);
+  assert.equal(g.player.powerTime, power);
+  assert.equal(g.bullets.length, 0);
+  togglePause(g);
+  const remaining = g.intermission;
+  run(g, 10);
+  assert.equal(g.intermission, remaining);
+  togglePause(g);
+  run(g, 3);
+  assert.equal(g.intermission, 0);
+  assert.equal(g.waveTime, 0);
+  assert.equal(g.player.hp, 80);
+  assert.equal(g.score, 1000);
+  step(g);
+  assert.ok(g.waveTime > 0);
+});
+test("Spider wall jump keeps its upward launch", () => {
+  const g = game();
+  g.player.x = 11.5;
+  g.player.y = 3;
+  g.player.grounded = false;
+  step(g, { right: true });
+  step(g, { right: true, jump: true });
+  assert.ok(g.player.vy > 12);
+  assert.ok(g.player.y > 3);
+  assert.equal(g.player.wall, false);
+});
+test("ranged aim follows direction and Steel shock stays horizontal", () => {
+  for (const hero of ["spider", "echo"]) {
+    for (const aim of ["up", "down"]) {
+      const g = game(hero);
+      if (hero === "echo") {
+        g.player.power = "turret";
+        g.player.powerTime = 10;
+      }
+      step(g, { left: true, attack: true, [aim]: true });
+      assert.ok(g.bullets[0].vx < 0);
+      assert.ok(aim === "up" ? g.bullets[0].vy > 0 : g.bullets[0].vy < 0);
+    }
+  }
+  const g = game("steel");
+  run(g, 0.5, { attack: true, up: true });
+  step(g, { up: true });
+  assert.equal(g.bullets[0].vy, 0);
+});
+test("Echo replaces every existing power including turret with a nearby punch", () => {
+  for (const power of ["drone", "turret", "robot"]) {
+    const g = game("echo");
+    g.player.power = power;
+    g.player.powerTime = 3;
+    const replacement = power === "robot" ? "drone" : "robot";
+    const e = spawnEnemy(g, replacement);
+    e.x = 1;
+    e.y = 0;
+    e.telegraph = 0;
+    step(g, { attack: true });
+    assert.equal(g.player.power, replacement);
+    assert.equal(g.player.powerTime, 10);
+    assert.equal(g.bullets.length, 0);
+  }
 });
 test("pause freezes the clock and restart resets the complete run", () => {
   const g = game("steel");

@@ -24,7 +24,7 @@ export const HEROES = {
     hp: 110,
     speed: 6.8,
     description: "Their power. Your advantage.",
-    tip: "Punch to absorb: drone = flight, turret = lasers, robot = super jump. Lasts 10s.",
+    tip: "Punch to absorb: drone = flight, turret = lasers, robot = super jump. One power, 10s. Turret form punches nearby foes.",
   },
 };
 export const PLATFORMS = [
@@ -35,11 +35,11 @@ export const PLATFORMS = [
 export const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 export function difficulty(wave) {
   return {
-    interval: Math.max(0.55, 2.9 * 0.91 ** (wave - 1)),
+    interval: Math.max(0.55, 3.7 * 0.87 ** (wave - 1)),
     hp: 2 + Math.floor((wave - 1) / 3),
-    damage: 9 + (wave - 1) * 1.5,
+    damage: 7 + (wave - 1) * 1.7,
     speed: Math.min(4.8, 1.7 + wave * 0.16),
-    cap: Math.min(24, 5 + wave * 2),
+    cap: Math.min(24, 3 + wave * 2),
   };
 }
 export function createGame(hero = "spider", rng = Math.random) {
@@ -49,11 +49,12 @@ export function createGame(hero = "spider", rng = Math.random) {
     phase: "ready",
     time: 0,
     waveTime: 0,
+    intermission: 0,
     wave: 1,
     score: 0,
     kills: 0,
     nextId: 1,
-    spawnIn: 0.7,
+    spawnIn: 3,
     pickupIn: 8,
     enemies: [],
     bullets: [],
@@ -226,6 +227,17 @@ export function step(g, input = {}, dt = 1 / 60) {
     prev = g.previous;
   g.events = [];
   g.time += dt;
+  if (g.intermission > 0) {
+    g.intermission = Math.max(0, g.intermission - dt);
+    if (g.intermission < 1e-8) {
+      g.intermission = 0;
+      g.banner = 2;
+    }
+    for (const e of g.effects) e.life -= dt;
+    g.effects = g.effects.filter((e) => e.life > 0);
+    g.previous = { ...input };
+    return;
+  }
   g.waveTime += dt;
   g.banner = Math.max(0, g.banner - dt);
   for (const k of ["invulnerable", "cooldown", "pose", "shield"])
@@ -247,6 +259,7 @@ export function step(g, input = {}, dt = 1 / 60) {
     if (p.wall) {
       p.x -= axis * 0.55;
       p.facing = -axis;
+      p.wall = false;
     }
     g.events.push("jump");
   }
@@ -276,7 +289,19 @@ export function step(g, input = {}, dt = 1 / 60) {
       p.chargeSpent = false;
     }
   } else if (input.attack && p.cooldown <= 0) {
-    if (g.hero === "spider" || p.power === "turret")
+    const canAbsorb =
+      g.hero === "echo" &&
+      g.enemies.some((e) => {
+        const dx = (e.x - p.x) * p.facing;
+        return (
+          e.hp > 0 &&
+          e.telegraph <= 0 &&
+          dx > -0.6 &&
+          dx < 2.1 &&
+          Math.abs(e.y - p.y) < 1.8
+        );
+      });
+    if (g.hero === "spider" || (p.power === "turret" && !canAbsorb))
       fire(
         g,
         g.hero === "spider" ? "web" : "laser",
@@ -389,13 +414,19 @@ export function step(g, input = {}, dt = 1 / 60) {
   g.effects = g.effects.filter((e) => e.life > 0).slice(-35);
   if (g.waveTime >= 60 && g.phase === "playing") {
     g.wave++;
-    g.waveTime -= 60;
-    g.banner = 3;
+    g.waveTime = 0;
+    g.intermission = 5;
+    g.banner = 0;
     g.score += 1000;
+    for (const e of g.enemies) effect(g, e.x, e.y + 0.8, "cyan", 2.5);
     g.enemies = [];
     g.bullets = [];
     p.hp = Math.min(p.maxHp, p.hp + 20);
     p.invulnerable = 2;
+    p.charge = 0;
+    p.chargeSpent = false;
+    p.pose = 0;
+    p.vx = 0;
     g.spawnIn = 1;
     g.events.push("wave");
   }

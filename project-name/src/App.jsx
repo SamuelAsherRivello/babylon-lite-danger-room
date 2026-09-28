@@ -171,6 +171,7 @@ export function App() {
       powerTime: 0,
       charge: 0,
       banner: 0,
+      intermission: 0,
       shield: 0,
     }),
     [muted, setMuted] = useState(false),
@@ -281,6 +282,7 @@ export function App() {
           powerTime: p.powerTime,
           charge: p.charge,
           banner: g.banner,
+          intermission: Math.ceil(g.intermission),
           shield: p.shield,
         });
       }
@@ -475,7 +477,21 @@ export function App() {
               <div style={{ width: `${(hud.charge / 3) * 100}%` }} />
             </div>
           )}
-          {playing && hud.banner > 0 && (
+          {playing && hud.intermission > 0 && (
+            <div className="wave-countdown" role="status" aria-live="polite">
+              <span className="eyebrow">
+                WAVE CLEARED · +1,000 POINTS · +20 HEALTH
+              </span>
+              <strong>
+                Wave {hud.wave} in {hud.intermission} secs...
+              </strong>
+              <span>Catch your breath. The room is recalibrating.</span>
+              <div className="countdown-track">
+                <i style={{ width: `${(hud.intermission / 5) * 100}%` }} />
+              </div>
+            </div>
+          )}
+          {playing && hud.intermission === 0 && hud.banner > 0 && (
             <div className="wave-banner">
               <span>PROTOCOL ENGAGED</span>
               <strong>WAVE {String(hud.wave).padStart(2, "0")}</strong>
@@ -703,7 +719,8 @@ export function App() {
             <p>
               Survive each 60-second wave. Eliminate holograms for points.
               Collect green health cubes or shields on platforms. Each cleared
-              wave restores 20 health.
+              wave restores up to 20 health, then gives you a five-second
+              breather.
             </p>
             {Object.entries(HEROES).map(([id, h]) => (
               <p key={id}>

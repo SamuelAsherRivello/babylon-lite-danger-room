@@ -4,6 +4,10 @@ context: |
   Stack: React, Vite, Babylon Lite WebGPU. Pure simulation with Node tests.
   Fixed landscape arena, keyboard and concurrent pointer controls, GitHub Pages.
   Canonical project documentation assets live in project-name/documentation/.
+  Runtime: WebGPU browsers on desktop and mobile; physical touch remains unverified.
+  Dependencies: retain the existing lockfile and Babylon Lite; no new packages needed.
+  Security: client-only game, no accounts, secrets, or remote writes at runtime.
+  Validation: npm test, npm run format:check, npm run build, in-app browser gameplay.
   Before proposing or applying a change, record the project's verified purpose,
   runtime targets, architecture, dependency policy, security constraints, and
   validation commands here.

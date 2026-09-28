@@ -10,7 +10,10 @@ export function verification({ getGame, replace, canvas }) {
     sent = new Set(),
     initial = 0,
     checks = [],
-    scenario = "";
+    scenario = "",
+    countdownSeen = new Set(),
+    lastFrame = performance.now(),
+    frameSamples = [];
   const keyCodes = {
     left: "KeyA",
     right: "KeyD",
@@ -47,6 +50,30 @@ export function verification({ getGame, replace, canvas }) {
     replace(g);
     mode = "bot";
     checks = [];
+    countdownSeen = new Set();
+  });
+  button("Preview countdown", () => {
+    inject({});
+    const g = createGame("steel");
+    g.waveTime = 59.98;
+    g.player.hp = 100;
+    startGame(g);
+    replace(g);
+    mode = "";
+  });
+  button("Inspect all threats", () => {
+    inject({});
+    const g = createGame("steel");
+    g.spawnIn = 999;
+    for (const [i, type] of ["robot", "drone", "turret"].entries()) {
+      const e = spawnEnemy(g, type);
+      e.x = [-4, 3, 8][i];
+      e.y = type === "drone" ? 3 : 0;
+      e.telegraph = 0;
+    }
+    g.banner = 0;
+    replace(g);
+    mode = "";
   });
   button("Verify keyboard + pointer", () => {
     inject({});
@@ -82,6 +109,10 @@ export function verification({ getGame, replace, canvas }) {
   document.body.append(panel);
   function before() {
     const g = getGame();
+    const now = performance.now();
+    if (now - lastFrame < 200) frameSamples.push(now - lastFrame);
+    if (frameSamples.length > 120) frameSamples.shift();
+    lastFrame = now;
     initial++;
     if (mode === "bot") {
       const target = g.enemies
@@ -96,9 +127,15 @@ export function verification({ getGame, replace, canvas }) {
         attack: g.time % 3.2 < 3.05,
         jump: !!target && target.y > g.player.y + 1.5 && g.time % 1.2 < 0.5,
       });
-      if (g.wave >= 2) {
+      if (g.intermission > 0) countdownSeen.add(Math.ceil(g.intermission));
+      if (g.wave >= 2 && !g.intermission) {
         checks.push(
           "PASS: survived a complete 60-second wave with unmodified health and damage",
+        );
+        checks.push(
+          countdownSeen.size === 5
+            ? "PASS: five-second countdown 5,4,3,2,1 before wave two"
+            : "FAIL: countdown sequence",
         );
         mode = "";
         inject({});
@@ -178,7 +215,10 @@ export function verification({ getGame, replace, canvas }) {
       }
     }
     const p = g.player;
-    out.textContent = `DEV VERIFICATION ${mode}\n${checks.join("\n")}\n${g.phase} / wave ${g.wave} / ${g.waveTime.toFixed(1)}s / HP ${p.hp.toFixed(0)} / score ${g.score}\nx=${p.x.toFixed(1)} y=${p.y.toFixed(1)} power=${p.power ?? "none"}`;
+    const fps =
+      (frameSamples.length * 1000) /
+      (frameSamples.reduce((a, b) => a + b, 0) || 1);
+    out.textContent = `DEV VERIFICATION ${mode}\n${checks.join("\n")}\n${g.phase} / wave ${g.wave} / ${g.waveTime.toFixed(1)}s / HP ${p.hp.toFixed(0)} / score ${g.score}\nx=${p.x.toFixed(1)} y=${p.y.toFixed(1)} power=${p.power ?? "none"}\ncountdown=${g.intermission.toFixed(2)} / recent FPS=${fps.toFixed(0)}`;
   }
   return {
     before,

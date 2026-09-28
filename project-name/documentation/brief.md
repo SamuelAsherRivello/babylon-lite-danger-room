@@ -35,3 +35,15 @@ Art reference: [Google Images search: danger room square side view](https://www.
 ## Template decisions
 
 The invoked creator skill and AGENTS.md require GitHub template generation and retaining `project-name/`; these control over the checklist's older copy/rename directions. The initial generated history is preserved. Skills are read from disk in this session; reopening the user's chat merely for autocomplete is unnecessary. Checklist cleanup is left optional.
+
+## Confirmed refinement interview — 2026-09-28
+
+The user requested exactly five questions, then autonomous completion without further questions. All five were answered:
+
+1. Detailed industrial 3D: more convincing metal, lighting, and articulated characters.
+2. Approachable opening, followed by relentless escalation.
+3. Echo carries one absorbed power at a time for ten seconds; absorption replaces the prior power.
+4. Directional ranged aiming, with up/down for diagonal shots.
+5. Brief recovery between waves, overridden to **five seconds**, with the exact pattern `Wave X in Y secs...`.
+
+Implementation retains the existing 20-health recovery (clamped to maximum), freezes combat and power timers during the safe breather, and pauses the countdown on focus loss. Turret-form Echo punches targets within melee reach to allow replacement and fires lasers at range. Original procedural art now includes a deterministic brushed-metal texture, wall stencils, cast shadows, layered structural detail and jointed character models; no external art or additional packages were added.

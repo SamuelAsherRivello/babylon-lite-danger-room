@@ -1,4 +1,19 @@
-# Verification — 2026-09-28
+# Verification — industrial refinement, 2026-09-28
+
+## Current local and browser evidence
+
+- All 19 automated tests pass, including five-second safe intermission, exact pause/resume timing, one-time recovery, directional aim, Echo replacement from all three powers and Spider wall-jump launch.
+- Formatting check and production build pass. Development fixture labels are absent from production assets.
+- Real WebGPU browser: detailed metal room, cast shadows, articulated heroes and all enemy silhouettes inspected at 1280 × 720. Fresh run showed no warning/error console entries.
+- A Steel bot using normal health and damage survived the full 60 seconds, observed countdown values 5, 4, 3, 2, 1, and entered wave 2 with 3,250 points and about 58 health. This deterministic fixture uses drone spawns; all enemy types were separately inspected and tested.
+- Concurrent keyboard move/jump/attack and emulated touch move/attack passed. Pointer cancellation stopped movement; focus loss paused play.
+- Echo absorbed drone, turret and robot forms. Drone flight reached 5.70 units at the one-second observation; robot jump reached 5.05. Model head/leg transformations and return to normal were inspected. Robot feet retain ground alignment.
+- Production preview at 390 × 844: Echo's longest instructions and start button fit. Whole arena and controls fit during play; document height equals viewport height. This is responsive emulation, not physical mobile hardware.
+- Recent frame-rate samples in this in-app browser ranged roughly 26–31 FPS with the upgraded scene. This is environment-specific observation, not a mobile-performance guarantee.
+- Current screenshots: screenshot01.png (production gameplay), mobile-menu.png (production selection), wave-countdown.png (development countdown fixture).
+
+## Earlier release evidence (v0.0.3)
+
 
 ## Local checks
 
