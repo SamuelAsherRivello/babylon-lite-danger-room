@@ -30,6 +30,6 @@ Physical touch hardware, mobile GPU performance, and other browser engines have 
 
 ## Public delivery
 
-Release and public verification results are recorded here after deployment completes.
+Release v0.0.3 succeeded in GitHub Actions run 36424885904. Tag and release commit: 4ea44db873653768965d48f1f455819dd18b8133. Pages deployment run 36424941945 succeeded for that revision. The public HTTPS game initialized WebGPU, displayed v0.0.3, started gameplay, accepted keyboard input, reached defeat, restarted with restored health/time, paused, and returned to hero selection. No warning/error console entries were observed in the fresh public browser tab. Public capture: live-game.png.
 
 Final visual QA found and corrected model part offsets: parenting preserves world position in Babylon Lite, so local positions are now assigned after parenting. GPU initialization is serialized to avoid overlapping setup during hot reload.

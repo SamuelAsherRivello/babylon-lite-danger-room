@@ -8,4 +8,4 @@
 ## 2. Delivery
 - [x] 2.1 Complete local production build and browser checks including full loop and narrow viewport; record evidence and limits.
 - [x] 2.2 Document controls, original brief, provenance, setup, screenshots and delivery checklist.
-- [ ] 2.3 Release and deploy using checked-in workflows, verify public gameplay/version, sync local checkout, and archive accepted specs.
+- [x] 2.3 Release and deploy using checked-in workflows, verify public gameplay/version, sync local checkout, and archive accepted specs.
