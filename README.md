@@ -1,73 +1,63 @@
-<!-- AI: Keep commands rooted at the repository. The Vite application, source, tests, and build output belong in project-name/. -->
-![Samuel Asher Rivello](project-name/documentation/samuel-asher-rivello-banner.png)
+# Danger Room
 
-# {project-name}
+One room. Sixty seconds. No final wave. An original single-player superhero training game with a 3D metal chamber, holographic enemies, and three distinct playable operatives.
 
-<!-- AI: Update this project summary when the template is used. -->
-This is the project repo....
+[Play Danger Room](https://samuelasherrivello.github.io/babylon-lite-danger-room/) · [Releases](https://github.com/SamuelAsherRivello/babylon-lite-danger-room/releases)
 
-## Images
+![Danger Room gameplay](project-name/documentation/screenshot01.png)
 
-### Screenshots
+## Play
 
-<a href="project-name/documentation/screenshot01.png"><img src="project-name/documentation/screenshot01.png" width="400" alt="Screenshot placeholder" /></a>
+- **The Spider** — web bullets slow enemies. Hold into either wall to cling; up/down climbs it.
+- **Steel** — increased health and damage resistance. Tap attack to punch, attack in the air to kick, or hold attack to spread his arms and charge. Release for a horizontal shockwave; it fires automatically at three seconds.
+- **Echo** — punch a hologram to steal its form for ten seconds. Drone head: hold jump to fly. Turret head: attack fires lasers. Robot legs: jump higher.
 
-## Live Demo
+Survive 60 active seconds to begin the next wave. Robots pursue, drones hover and fire, and turrets shoot aimed projectiles. Their health and damage grow without a final wave; simultaneous enemies are capped at 24. Pick up green health cubes or cyan shields. Each cleared wave awards 1,000 points and restores 20 health. Personal best is saved on this browser.
 
-- [{live-demo-url}](https://samuelasherrivello.github.io/github-repository-template/)
+| Action | Keyboard | Touch |
+| --- | --- | --- |
+| Move | A/D or left/right | Direction pad |
+| Climb / aim | W/S or up/down | Up/down |
+| Jump / fly | C (or Space) | Jump |
+| Attack / charge | V | Attack |
+| Drop through platform | S or down | Down |
+| Pause / resume | P or Esc | Pause / Resume |
 
-## Table of Contents
+Touch actions work concurrently. Focus loss releases controls and pauses. Fullscreen, sound, instructions, restart and hero selection are available in the UI. Landscape orientation gives the largest useful view on phones.
 
-1. [Images](#images)
-2. [Live Demo](#live-demo)
-3. [Getting Started](#getting-started)
-4. [Project Details](#project-details)
-5. [Credits](#credits)
+## Run locally
 
-## Getting Started
+Use Node.js 24+ and a WebGPU-capable browser with hardware acceleration. Serve from localhost or HTTPS. There is a clear recovery screen when WebGPU initialization fails; no WebGL fallback is included.
 
-<!-- AI: Update this getting-started summary when the template is used. -->
-This is the getting started...
+Run from the repository root:
 
-### 🛠 Build Project
+```sh
+npm ci
+npm run dev
+npm test
+npm run format:check
+npm run build
+npm run preview
+```
 
-1. From the repository root, run `npm install`.
-2. Run `npm run build`.
+`npm run format` applies formatting. Vite uses `/babylon-lite-danger-room/` as its base for both development and GitHub Pages. The application stays in `project-name/`, as required by the repository guidance.
 
-### 🛠 Run Project
+## Architecture and verification
 
-1. From the repository root, run `npm run dev` and open the localhost URL Vite prints.
-2. Run `npm test` to execute the focused source checks.
+- `project-name/src/game.js`: renderer-independent simulation, collision, enemy AI, abilities and wave scaling.
+- `project-name/src/scene.js`: Babylon Lite WebGPU scene and original pooled 3D models.
+- `project-name/src/App.jsx`: React menus, HUD, synthesized audio and keyboard/pointer lifecycle.
+- `project-name/src/verification.js`: development-only browser fixture, activated by `?verify`. Tests use the actual keyboard/pointer event handlers; the full-wave bot uses normal health and damage. This module is eliminated from production builds.
+- `project-name/test/`: gameplay, deployment-path and skill integrity tests.
+- `openspec/`: design, tasks and accepted behavioral specifications.
 
-### 🛠 Release Version
+See [verification evidence](project-name/documentation/verification.md), [original brief and asset provenance](project-name/documentation/brief.md), and [mobile screenshot](project-name/documentation/mobile-menu.png). Physical touch hardware has not been tested; the multi-pointer checks use emulated events. Browser rendering was inspected with real WebGPU.
 
-1. Run `npm test` and `npm run build` from the repository root.
-2. Push to `main` to deploy through the GitHub Pages workflow.
-3. Run the **Release** workflow from GitHub Actions to bump the patch version, tag it, and create the GitHub release.
+## Release
 
-## Project Details
+`version.txt` is the single version source. Push main to deploy through `deploy-pages.yml`. Dispatch `release.yml` to install dependencies, test, build, increment the patch version, push a version commit/tag and create a GitHub release. Then explicitly dispatch `deploy-pages.yml`, because the release bot's push may not trigger another workflow. Verify the public game and displayed version, then `git pull --ff-only`.
 
-<!-- AI: Update these project details when the template is used. -->
-This is the project details...
-
-### 📝 Structure
-
-- `project-name/index.html` provides the plain safe-area HTML shell.
-- `project-name/test/` contains focused automated checks for the starter.
-- `project-name/documentation/` contains canonical README images and project
-  documentation assets.
-
-### 📦 AI
-
-- `AGENTS.md` contains repository-specific AI agent guidance.
-- `AGENTS_TEMPLATE_USAGE_CHECKLIST.md` contains the template reuse checklist.
-- [openspec](openspec/) contains the repository's specification workflow
-  configuration.
-
-### 📦 Packages
-
-- [Vite](https://vite.dev/) provides local development and production builds.
-
+The project was created from [SamuelAsherRivello/github-repository-template](https://github.com/SamuelAsherRivello/github-repository-template), with shared skills imported from [ai-skills-library](https://github.com/SamuelAsherRivello/ai-skills-library). Source revisions and retained instruction differences are recorded in the brief. The original MIT license is unchanged.
 
 ## Credits
 

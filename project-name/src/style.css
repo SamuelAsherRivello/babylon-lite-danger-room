@@ -1,76 +1,1164 @@
-html,
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+:root {
+  font-family: "Barlow", Arial, sans-serif;
+  color: #f1f2ec;
+  background: #101418;
+  font-synthesis: none;
+  --orange: #fa704c;
+  --muted: #819095;
+  --line: #303b40;
+}
+* {
+  box-sizing: border-box;
+}
 body {
-  height: 100%;
   margin: 0;
 }
-
-#ui_layer {
-  position: fixed;
-  inset: var(--ui-margin-y, 20px) var(--ui-margin-x, 20px);
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  touch-action: none;
+}
+button:disabled {
+  cursor: wait;
+  opacity: 0.5;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 4px;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+canvas {
+  user-select: none;
+}
+canvas:focus {
+  outline: none;
+}
+.app-shell {
+  max-width: 1500px;
+  margin: auto;
+  padding: 22px 40px 18px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(ellipse at 50% 0, #232c30 0, transparent 65%);
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.brand-mark {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  border: 2px solid var(--orange);
+  width: 49px;
+  height: 49px;
+  line-height: 42px;
+  text-align: center;
+  color: var(--orange);
+  position: relative;
+}
+.brand-mark span {
+  position: absolute;
+  left: 11px;
+  top: -2px;
+  color: #161d21;
+  font-size: 65px;
+}
+h1 {
+  font:
+    800 29px/0.95 "Barlow Condensed",
+    Impact,
+    sans-serif;
+  letter-spacing: 1.1px;
+  margin: 0;
+}
+.title-dot {
+  font:
+    10px "Barlow",
+    sans-serif;
+  vertical-align: top;
+  margin-left: 4px;
+}
+.brand p {
+  font:
+    9px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 2.5px;
+  margin: 9px 0 0;
+  color: #98a3a4;
+}
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  font:
+    10px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1px;
+}
+.system-status {
+  color: #9aaa9c;
+}
+.system-status i,
+.facility-line i {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: #b4d7a6;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 10px #81c97866;
+}
+.header-links a {
+  border: 1px solid #485255;
+  padding: 10px 14px;
+}
+.facility-line {
+  display: flex;
+  justify-content: space-between;
+  font:
+    9px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1.2px;
+  color: #9ba9ac;
+  padding: 16px 0 12px;
+}
+.facility-line b {
+  color: var(--orange);
+  margin: 0 8px;
+}
+.facility-line i {
+  background: var(--orange);
+  box-shadow: none;
+}
+main {
+  width: 100%;
+  margin: auto 0;
+}
+.arena {
+  position: relative;
+  aspect-ratio: 2/1;
+  max-height: calc(100dvh - 290px);
+  min-height: 350px;
+  overflow: hidden;
+  background: #131d24;
+  border: 1px solid #4c575a;
+  border-top: 2px solid #727976;
+  box-shadow: 0 20px 60px #0005;
+}
+.arena canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+.arena-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 85px #0005;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(100deg, #101b22f5, #121d25ed 65%, #101d27e0);
+}
+.selection {
+  padding: 24px 4% 30px;
+  display: grid;
+  grid-template-columns: 1fr 1.62fr;
+  grid-template-rows: 1fr auto;
+  gap: 20px 34px;
+  align-items: center;
+}
+.eyebrow {
+  font:
+    10px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1.7px;
+}
+.orange {
+  color: var(--orange);
+}
+h2 {
+  font:
+    800 clamp(34px, 4.6vw, 64px)/0.96 "Barlow Condensed",
+    Impact,
+    sans-serif;
+  letter-spacing: -0.5px;
+  margin: 17px 0;
+}
+h2 em {
+  font-style: normal;
+  color: #abb7b9;
+}
+.selection-heading p {
+  font-size: 13px;
+  color: #a1aeb2;
+  line-height: 1.7;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.hero-card {
+  border: 1px solid #42505a;
+  background: linear-gradient(135deg, #29333b99, #19232bdd);
+  text-align: left;
+  padding: 12px 13px 14px;
+  position: relative;
+  transition:
+    background 0.2s,
+    border 0.2s,
+    transform 0.2s;
+  min-width: 0;
+}
+.hero-card.selected {
+  border-color: var(--hero);
+  background: linear-gradient(135deg, #344149cc, #1a252fdd);
+  box-shadow: inset 0 -3px var(--hero);
+}
+.hero-card:hover {
+  transform: translateY(-3px);
+  background: #344149;
+}
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font:
+    8px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 0.6px;
+  color: #87959b;
+}
+.selected .card-top {
+  color: var(--hero);
+}
+.hero-art {
+  display: block;
+  width: 100%;
+  max-height: 160px;
+  color: var(--hero);
+  margin: 8px 0 1px;
+}
+.hero-card h3 {
+  font:
+    700 26px "Barlow Condensed",
+    sans-serif;
+  text-transform: uppercase;
+  margin: 0 0 3px;
+}
+.hero-role {
+  font:
+    7px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1.3px;
+  color: var(--hero);
+}
+.hero-card p {
+  font-size: 10px;
+  line-height: 1.5;
+  color: #9babb1;
+  min-height: 28px;
+  margin: 10px 0 0;
+}
+.deploy-row {
+  grid-column: 1/-1;
+  border-top: 1px solid #ffffff20;
+  padding-top: 18px;
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  justify-content: space-between;
+}
+.deploy-row p {
+  color: #a6b5bb;
+  font-size: 12px;
+  max-width: 450px;
+  line-height: 1.6;
+  margin: 0;
+}
+.primary {
+  background: var(--orange);
+  color: #181e22;
+  border: 0;
+  min-height: 45px;
+  min-width: 200px;
+  padding: 14px 22px;
+  font:
+    600 11px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1.4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  box-shadow: 0 3px 0 #9c402c;
+}
+.primary:hover {
+  background: #ff916e;
+}
+.primary span {
+  font-size: 22px;
+  line-height: 10px;
+}
+.arena-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  background: #0c151bea;
+  border-top: 1px solid #3d4d5355;
+  color: #6c848e;
+  font:
+    7px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1.5px;
+  z-index: 4;
+}
+.arena-label span:first-child {
+  color: #b1bbba;
+}
+.control-deck {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px 13px;
+  border-bottom: 1px solid var(--line);
+}
+.virtual-controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.dpad {
+  display: grid;
+  grid-template-columns: repeat(3, 30px);
+  grid-template-rows: repeat(2, 30px);
+  gap: 3px;
+}
+.dpad button {
+  background: #202a30;
+  border: 1px solid #455157;
+  font:
+    18px "Barlow",
+    sans-serif;
+  color: #a5b5ba;
+}
+.dpad .up {
+  grid-area: 1/2;
+}
+.dpad .left {
+  grid-area: 2/1;
+}
+.dpad .down {
+  grid-area: 2/2;
+}
+.dpad .right {
+  grid-area: 2/3;
+}
+.control-caption {
+  font:
+    8px "IBM Plex Mono",
+    monospace;
+  color: #8b9b9f;
+  max-width: 90px;
+  line-height: 2;
+}
+.control-caption kbd {
+  white-space: nowrap;
+}
+kbd {
+  font: inherit;
+  color: #c6d0cf;
+}
+.training-note {
+  text-align: center;
+}
+.training-note > span {
+  font:
+    8px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1.5px;
+}
+.training-note p {
+  font:
+    600 21px "Barlow Condensed",
+    sans-serif;
+  margin: 4px 0;
+}
+.training-note small {
+  font:
+    7px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #71858d;
+}
+.action-controls {
+  display: flex;
+  gap: 20px;
+}
+.action-controls > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.action-controls span {
+  font:
+    8px "IBM Plex Mono",
+    monospace;
+  color: #7f9097;
+  letter-spacing: 1px;
+}
+.action-controls kbd {
+  border: 1px solid #3c4a50;
+  padding: 1px 4px;
+}
+.action {
+  height: 45px;
+  width: 62px;
+  background: #263339;
+  border: 1px solid #687b84;
+  font-size: 25px;
+  transform: skewX(-7deg);
+  box-shadow: 0 3px 0 #080f13;
+}
+.action.attack {
+  background: #e66f4e;
+  border-color: #ff9674;
+  color: #20272b;
+}
+.held {
+  filter: brightness(1.6);
+  transform: translateY(2px) !important;
+}
+footer {
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  font:
+    8px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 0.6px;
+  color: #70828a;
+}
+.settings {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.settings button {
+  font: inherit;
+  background: none;
+  padding: 0;
+  border: 0;
+  color: #9aabaa;
+}
+.corner_bottom_right {
+  display: flex;
+  gap: 20px;
+}
+.corner_bottom_right #version {
+  color: #c0cbca;
+}
+.hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 24px;
+  background: linear-gradient(#101c24dd, transparent);
   pointer-events: none;
 }
-
-.corner {
+.vitals {
+  width: 180px;
+}
+.vitals .eyebrow {
+  display: flex;
+  justify-content: space-between;
+  letter-spacing: 1px;
+  font-size: 9px;
+}
+.vitals small {
+  font-size: 8px;
+  color: #a4b6bd;
+}
+.health-track {
+  height: 5px;
+  background: #293943;
+  margin: 8px 0;
+}
+.health-track > div {
+  height: 100%;
+  transition: width 0.15s;
+}
+.ability-status {
+  font:
+    7px "IBM Plex Mono",
+    monospace;
+  color: #a3bec7;
+  letter-spacing: 1px;
+}
+.wave-clock {
+  text-align: center;
+  font:
+    9px "IBM Plex Mono",
+    monospace;
+  color: #b1c3ca;
+}
+.wave-clock > strong {
+  display: block;
+  font:
+    600 40px/0.95 "Barlow Condensed",
+    sans-serif;
+  color: white;
+  margin-top: 5px;
+}
+.wave-clock small {
+  font-size: 16px;
+  color: #8ca3af;
+}
+.score {
+  position: relative;
+  text-align: right;
+  padding-right: 38px;
+  font:
+    8px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #99aeb7;
+}
+.score strong {
+  display: block;
+  font:
+    600 23px "Barlow Condensed",
+    sans-serif;
+  color: #f3f2e5;
+  letter-spacing: 2px;
+}
+.score button {
   position: absolute;
-  color: black;
-  font-size: 10pt;
+  right: 0;
+  top: 0;
+  border: 1px solid #71828a;
+  background: #18242c;
+  width: 28px;
+  height: 29px;
   pointer-events: auto;
 }
-
-.corner_top_left {
-  top: 0;
-  left: 0;
+.wave-banner {
+  position: absolute;
+  top: 28%;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  text-shadow: 0 2px 16px #000;
 }
-
-.corner_top_right {
-  top: 0;
-  right: 0;
+.wave-banner span {
+  font:
+    9px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 4px;
+  color: #ed9478;
 }
-
-.corner_bottom_left {
-  bottom: 0;
-  left: 0;
+.wave-banner strong {
+  display: block;
+  font:
+    800 52px "Barlow Condensed",
+    sans-serif;
+  letter-spacing: 2px;
 }
-
-.corner_bottom_right {
-  right: 0;
-  bottom: 0;
+.wave-banner p {
+  margin: 0;
+  font:
+    11px "IBM Plex Mono",
+    monospace;
+  color: #c5d9df;
 }
-
-.corner a,
-.corner a:visited {
-  color: black;
+.charge {
+  position: absolute;
+  bottom: 45px;
+  width: 180px;
+  left: calc(50% - 90px);
+  height: 4px;
+  background: #26343a;
 }
-
-.corner_body,
-.corner_title {
-  color: black;
-  font-size: 10pt;
-  line-height: 1.4;
+.charge span {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font:
+    8px "IBM Plex Mono",
+    monospace;
+  color: #f9bb73;
 }
-
-.corner_title {
-  font-weight: 700;
+.charge > div {
+  height: 100%;
+  background: #f5ae66;
 }
-
-.corner_body {
-  font-weight: 400;
-}
-
-.settings_option {
-  appearance: none;
-  background: transparent;
-  border: 0;
-  color: black;
-  cursor: pointer;
-  display: inline-flex;
+.centered {
+  display: flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0;
-  font: inherit;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 28px;
 }
-
-.settings_option:focus-visible {
-  outline: 2px solid black;
-  outline-offset: 3px;
+.centered h2 {
+  margin: 16px 0;
+}
+.centered p {
+  color: #9eafb6;
+  max-width: 470px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+.centered .primary {
+  margin: 12px 0;
+}
+.text-button {
+  background: none;
+  border: 0;
+  color: #9eafb6;
+  font-size: 11px;
+  margin-top: 8px;
+}
+.result-row {
+  display: flex;
+  gap: 40px;
+  margin: 15px 0;
+}
+.result-row span {
+  font:
+    8px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #90a7b0;
+}
+.result-row strong {
+  display: block;
+  font:
+    600 32px "Barlow Condensed",
+    sans-serif;
+}
+.help-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: #000b;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+}
+.help {
+  position: relative;
+  max-width: 570px;
+  max-height: 90dvh;
+  overflow: auto;
+  background: #19272f;
+  border: 1px solid #586970;
+  padding: 35px;
+}
+.help h2 {
+  font-size: 42px;
+}
+.help p {
+  font-size: 13px;
+  color: #aebec6;
+  line-height: 1.7;
+}
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  background: none;
+  border: 0;
+  font-size: 28px;
+}
+.centered details {
+  font-size: 11px;
+  color: #9eafb6;
+  max-width: 80%;
+  margin-bottom: 12px;
+}
+@media (min-width: 1500px) {
+  .arena {
+    max-height: 660px;
+  }
+}
+@media (max-width: 1000px) {
+  .app-shell {
+    padding: 18px 22px;
+  }
+  .selection {
+    gap: 14px 20px;
+    padding: 23px 3% 34px;
+    grid-template-columns: 0.8fr 1.7fr;
+  }
+  .hero-card {
+    padding: 10px;
+  }
+  .hero-art {
+    max-height: 135px;
+  }
+  .selection-heading h2 {
+    font-size: 43px;
+  }
+  .hero-role {
+    font-size: 6px;
+    letter-spacing: 0.8px;
+  }
+  .hero-card h3 {
+    font-size: 24px;
+  }
+  .deploy-row p {
+    font-size: 11px;
+  }
+  .hero-card p {
+    font-size: 9px;
+  }
+  .control-deck {
+    padding: 15px 10px;
+  }
+  .virtual-controls {
+    gap: 12px;
+  }
+  .header-links {
+    gap: 15px;
+  }
+  .arena {
+    min-height: 340px;
+  }
+}
+@media (max-width: 700px) {
+  .app-shell {
+    padding: 12px;
+    min-height: 100dvh;
+  }
+  header {
+    padding-bottom: 14px;
+  }
+  .brand {
+    gap: 9px;
+  }
+  .brand-mark {
+    width: 34px;
+    height: 35px;
+    line-height: 29px;
+    font-size: 33px;
+  }
+  .brand-mark span {
+    font-size: 47px;
+    left: 6px;
+    top: -3px;
+  }
+  h1 {
+    font-size: 23px;
+  }
+  .brand p {
+    font-size: 6px;
+    letter-spacing: 1.8px;
+    margin-top: 6px;
+  }
+  .system-status {
+    display: none;
+  }
+  .header-links a {
+    padding: 8px;
+    font-size: 8px;
+  }
+  .facility-line {
+    font-size: 7px;
+    letter-spacing: 0.5px;
+    padding-top: 12px;
+  }
+  .facility-line b {
+    margin: 0 3px;
+  }
+  .arena {
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 2/1;
+    overflow: hidden;
+  }
+  .arena canvas {
+    position: absolute;
+    inset: 0;
+  }
+  .arena:has(.selection) {
+    aspect-ratio: auto;
+    height: 475px;
+  }
+  .arena:has(.selection) canvas {
+    opacity: 0.45;
+  }
+  .selection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 22px 14px 36px;
+  }
+  .selection-heading {
+    text-align: center;
+  }
+  .selection-heading h2 {
+    font-size: 35px;
+    margin: 10px 0;
+  }
+  .selection-heading h2 br {
+    display: none;
+  }
+  .selection-heading h2 em {
+    margin-left: 7px;
+  }
+  .selection-heading p {
+    font-size: 11px;
+    margin: 0;
+  }
+  .eyebrow {
+    font-size: 8px;
+  }
+  .hero-grid {
+    width: 100%;
+    gap: 7px;
+  }
+  .hero-card {
+    padding: 9px 8px;
+  }
+  .hero-art {
+    height: 109px;
+    margin-top: 1px;
+  }
+  .card-top {
+    font-size: 6px;
+  }
+  .hero-card h3 {
+    font-size: 23px;
+  }
+  .hero-role {
+    font-size: 6px;
+    letter-spacing: 0.3px;
+  }
+  .hero-card p {
+    font-size: 9px;
+    min-height: 26px;
+    margin: 7px 0 2px;
+  }
+  .deploy-row {
+    padding-top: 10px;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  .deploy-row p {
+    font-size: 10px;
+    text-align: center;
+    min-height: 30px;
+  }
+  .primary {
+    min-height: 40px;
+    font-size: 10px;
+  }
+  .deploy-row .primary {
+    width: 100%;
+  }
+  .arena-label {
+    font-size: 5px;
+    letter-spacing: 1px;
+    padding: 0 8px;
+    height: 19px;
+  }
+  .control-deck {
+    padding: 22px 8px 18px;
+  }
+  .control-caption {
+    display: none;
+  }
+  .training-note {
+    max-width: 100px;
+  }
+  .training-note > span {
+    font-size: 6px;
+    line-height: 1.5;
+    display: block;
+  }
+  .training-note p {
+    font-size: 17px;
+  }
+  .training-note small {
+    font-size: 6px;
+  }
+  .action-controls {
+    gap: 11px;
+  }
+  .action {
+    width: 48px;
+    height: 43px;
+  }
+  .action-controls span {
+    font-size: 6px;
+    letter-spacing: 0.5px;
+  }
+  .dpad {
+    grid-template-columns: repeat(3, 29px);
+    grid-template-rows: repeat(2, 29px);
+  }
+  footer {
+    font-size: 6px;
+    padding-top: 14px;
+  }
+  .settings {
+    gap: 7px;
+  }
+  .corner_bottom_right {
+    gap: 8px;
+  }
+  .corner_bottom_right > span:first-child {
+    display: none;
+  }
+  .hud {
+    padding: 9px 10px;
+  }
+  .vitals {
+    width: 110px;
+  }
+  .vitals .eyebrow {
+    font-size: 6px;
+  }
+  .vitals small {
+    font-size: 6px;
+  }
+  .health-track {
+    margin: 5px 0;
+    height: 3px;
+  }
+  .ability-status {
+    font-size: 5px;
+    letter-spacing: 0.2px;
+  }
+  .wave-clock {
+    font-size: 6px;
+  }
+  .wave-clock > strong {
+    font-size: 24px;
+    margin-top: 2px;
+  }
+  .wave-clock small {
+    font-size: 10px;
+  }
+  .score {
+    font-size: 5px;
+    padding-right: 26px;
+  }
+  .score strong {
+    font-size: 17px;
+    letter-spacing: 1px;
+  }
+  .score button {
+    width: 20px;
+    height: 23px;
+    font-size: 9px;
+  }
+  .wave-banner {
+    top: 29%;
+  }
+  .wave-banner strong {
+    font-size: 29px;
+  }
+  .wave-banner span {
+    font-size: 6px;
+    letter-spacing: 2px;
+  }
+  .wave-banner p {
+    font-size: 8px;
+  }
+  .centered {
+    padding: 15px 8px 24px;
+  }
+  .centered h2 {
+    font-size: 28px;
+    margin: 8px;
+  }
+  .centered h2 br {
+    display: none;
+  }
+  .centered h2 em {
+    margin-left: 5px;
+  }
+  .centered p {
+    font-size: 9px;
+    margin: 2px 0 6px;
+  }
+  .centered .primary {
+    min-height: 30px;
+    padding: 7px 13px;
+    margin: 6px;
+    font-size: 8px;
+  }
+  .text-button {
+    font-size: 9px;
+    margin: 4px;
+  }
+  .result-row {
+    gap: 25px;
+    margin: 0;
+  }
+  .result-row span {
+    font-size: 6px;
+  }
+  .result-row strong {
+    font-size: 21px;
+  }
+  .charge {
+    bottom: 30px;
+    width: 120px;
+    left: calc(50% - 60px);
+  }
+  .charge span {
+    font-size: 6px;
+  }
+  .help {
+    padding: 24px;
+  }
+  .help p {
+    font-size: 12px;
+  }
+  .help h2 {
+    font-size: 35px;
+  }
+  main {
+    margin: auto 0;
+  }
+}
+@media (max-height: 600px) and (min-width: 701px) {
+  .app-shell {
+    padding: 10px 22px;
+  }
+  header {
+    padding-bottom: 10px;
+  }
+  .brand-mark {
+    height: 36px;
+    width: 37px;
+    line-height: 30px;
+    font-size: 34px;
+  }
+  .brand-mark span {
+    font-size: 50px;
+    left: 7px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  .brand p {
+    font-size: 7px;
+    margin-top: 5px;
+  }
+  .facility-line {
+    padding: 9px 0;
+  }
+  .arena {
+    min-height: 275px;
+    max-height: calc(100dvh - 195px);
+  }
+  .selection {
+    padding: 14px 3% 29px;
+    gap: 8px 20px;
+  }
+  .hero-art {
+    height: 90px;
+  }
+  .hero-card p {
+    display: none;
+  }
+  .selection-heading h2 {
+    font-size: 38px;
+  }
+  .deploy-row {
+    padding-top: 8px;
+  }
+  .primary {
+    min-height: 35px;
+    padding: 10px 16px;
+  }
+  .control-deck {
+    padding: 9px 10px;
+  }
+  .training-note p {
+    font-size: 17px;
+  }
+  .dpad {
+    grid-template-columns: repeat(3, 24px);
+    grid-template-rows: repeat(2, 24px);
+  }
+  .action {
+    height: 32px;
+    width: 48px;
+    font-size: 22px;
+  }
+  footer {
+    padding-top: 9px;
+  }
+  .hero-card h3 {
+    font-size: 22px;
+  }
+}
+.arena {
+  width: 100%;
+}
+@media (max-width: 700px) {
+  .selection-heading h2 {
+    font-size: 29px;
+  }
+  .hero-art {
+    height: 88px;
+  }
+  .hero-card h3 {
+    font-size: 19px;
+    white-space: nowrap;
+  }
+  .hero-card p {
+    font-size: 8px;
+  }
+  .selection {
+    gap: 10px;
+  }
+  .hero-card {
+    padding: 8px 6px;
+  }
 }

@@ -1,0 +1,4 @@
+interface:
+  display_name: "RMC Game Creator"
+  short_description: "Create and publish a single-player browser game"
+  default_prompt: "Use $rmc-game-creator to build and publish a single-player game from my idea using the repository template, shared skills library, and GitHub Pages."

@@ -6,7 +6,7 @@ import { defineConfig } from "vite";
 const repositoryRoot = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  base: "/github-repository-template/",
+  base: "/babylon-lite-danger-room/",
   plugins: [react()],
   root: "project-name",
   server: {

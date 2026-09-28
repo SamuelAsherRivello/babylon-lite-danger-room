@@ -1,19 +1,23 @@
 {
-  "name": "github-repository-template",
+  "name": "babylon-lite-danger-room",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test --test-isolation=none project-name/test/page.test.mjs project-name/test/openspec-skills.test.mjs"
+    "test": "node --test project-name/test/*.test.mjs",
+    "format": "prettier --write project-name/src project-name/test vite.config.js",
+    "format:check": "prettier --check project-name/src project-name/test vite.config.js"
   },
   "dependencies": {
+    "@babylonjs/lite": "^1.32.0",
     "@vitejs/plugin-react": "^6.1.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
+    "prettier": "^3.9.9",
     "vite": "^8.3.0"
   }
 }

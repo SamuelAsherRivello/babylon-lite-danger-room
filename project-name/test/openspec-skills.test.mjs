@@ -23,11 +23,17 @@ test("documents the bundled OpenSpec Codex skills without a checklist update", a
 });
 
 test("keeps OpenSpec skill folders discoverable by Codex", async () => {
-  const target = await readFile(new URL(".openspec-target", skillsRoot), "utf8");
+  const target = await readFile(
+    new URL(".openspec-target", skillsRoot),
+    "utf8",
+  );
   assert.equal(target.trim(), "codex");
 
-  const skillDirectories = (await readdir(skillsRoot, { withFileTypes: true }))
-    .filter((entry) => entry.isDirectory() && entry.name.startsWith("openspec-"));
+  const skillDirectories = (
+    await readdir(skillsRoot, { withFileTypes: true })
+  ).filter(
+    (entry) => entry.isDirectory() && entry.name.startsWith("openspec-"),
+  );
 
   assert.ok(skillDirectories.length > 0, "expected generated OpenSpec skills");
 
@@ -38,7 +44,10 @@ test("keeps OpenSpec skill folders discoverable by Codex", async () => {
     );
     const frontmatterName = skill.match(/^name:\s*(.+)$/m)?.[1]?.trim();
     assert.equal(frontmatterName, directory.name);
-    const generatedBy = skill.match(/^\s+generatedBy:\s*["']?([^"'\s]+)["']?$/m)?.[1];
-    assert.equal(generatedBy, "1.13.1");
+    const generatedBy = skill.match(
+      /^\s+generatedBy:\s*["']?([^"'\s]+)["']?$/m,
+    )?.[1];
+    // Shared-library macros are authored skills; only generated skills declare this field.
+    if (generatedBy) assert.equal(generatedBy, "1.13.1");
   }
 });
