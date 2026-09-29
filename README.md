@@ -4,7 +4,56 @@ One room. Sixty seconds. No final wave. An original single-player superhero trai
 
 [Play Danger Room](https://samuelasherrivello.github.io/babylon-lite-danger-room/) 
 
-![Danger Room gameplay](project-name/documentation/screenshot01.png)
+## Original AI Prompt
+
+<details>
+<summary>Read the full original prompt (edited for grammar, punctuation, spelling, and formatting)</summary>
+
+```text
+Art reference:
+
+https://www.google.com/search?udm=2&q=danger+room+square+side+view
+
+Use $rmc-game-creator to make a single-player game called "Danger Room," and use
+the local folder name as the repository name.
+
+The game is a clone of the concept of the Marvel Comics Danger Room, where
+superheroes go to train. It must feel like a real player in a real metal room,
+with hologram robots, turrets, and drones that the player must attack.
+
+The player must survive 60 seconds per wave. Each round increases in difficulty,
+and the waves continue forever using programmatic difficulty adjustments, like
+a 1980s Atari game. The game fits on one screen, with no scrolling. Include a
+couple of platforms and a few pickups, but leave plenty of room for the character
+to move around.
+
+The virtual controller has four directions, jump, and attack. Keyboard controls
+can use WASD or the arrow keys, plus C and V.
+
+Create three superhero choices:
+
+1. The Spider: a Spider-Man parody who can stick to walls and shoot web bullets.
+
+2. Steel: a parody of Marvel's Colossus. He is defensive and strong, with a melee
+   punch and a jumping kick. Holding attack spreads his arms wide while he
+   charges. Releasing attack creates a horizontal shockwave in the direction he
+   faces. The charge lasts a maximum of three seconds, then fires automatically.
+
+3. A Rogue parody: she can punch enemies to absorb their abilities. Punching a
+   drone turns her head into a drone, and holding jump lets her fly for ten
+   seconds. Punching a turret turns her head into a turret, and the action button
+   shoots lasers. Punching a robot turns her legs robotic and lets her jump.
+
+The environment must be 3D. Each enemy and player can use 2D or 3D character art.
+```
+
+Prompt links: [Art reference](https://www.google.com/search?udm=2&q=danger+room+square+side+view) · [RMC Game Creator skill](.agents/skills/rmc-game-creator/SKILL.md)
+
+</details>
+
+## Images
+
+<a href="project-name/documentation/screenshot01.png"><img src="project-name/documentation/screenshot01.png" width="400" alt="Danger Room gameplay: a metal training chamber with a superhero, holographic enemies, and platforms" /></a>
 
 ## Play
 
