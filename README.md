@@ -2,7 +2,7 @@
 
 One room. Sixty seconds. No final wave. An original single-player superhero training game with a 3D metal chamber, holographic enemies, and three distinct playable operatives.
 
-[Play Danger Room](https://samuelasherrivello.github.io/babylon-lite-danger-room/) · [Releases](https://github.com/SamuelAsherRivello/babylon-lite-danger-room/releases)
+[Play Danger Room](https://samuelasherrivello.github.io/babylon-lite-danger-room/) 
 
 ![Danger Room gameplay](project-name/documentation/screenshot01.png)
 
